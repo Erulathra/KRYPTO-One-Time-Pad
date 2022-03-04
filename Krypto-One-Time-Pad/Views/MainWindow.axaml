@@ -1,0 +1,114 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Krypto_One_Time_Pad.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="450"
+        x:Class="Krypto_One_Time_Pad.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Krypto One Time Pad"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+        
+    </Design.DataContext>
+    <Window.Styles>
+        <Style Selector="TextBlock.Header">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Styles>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <Border Padding="15">
+            <StackPanel Spacing="15" Classes="Background" Orientation="Horizontal" HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
+                        <TextBlock Text="Text Jawny" Classes="Header" HorizontalAlignment="Center" />
+                        <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
+                        <StackPanel Spacing="10" Orientation="Horizontal">
+                            <TextBox Text="Ścieżka do pliku" Width="120" />
+                            <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                        </StackPanel>
+                        <TextBox Text="Tutaj możesz wpisać tekst jawny w formie UTF-8"
+                                 Width="220"
+                                 Height="360"
+                                 TextWrapping="Wrap" />
+                        <StackPanel Orientation="Vertical" Spacing="5">
+                            <TextBlock Text="Ilość znaków: " Width="220" />
+                            <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                        <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
+                            <TextBlock Text="Klucz" Classes="Header" HorizontalAlignment="Center" />
+                            <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
+                            <StackPanel Spacing="10" Orientation="Horizontal">
+                                <TextBox Text="Ścieżka do pliku" Width="120" />
+                                <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                            </StackPanel>
+                            <TextBox Text="Tutaj możesz wpisać klucz w formie UTF-8"
+                                     Width="220"
+                                     Height="360"
+                                     TextWrapping="Wrap" />
+                            <StackPanel Orientation="Vertical" Spacing="5">
+                                <TextBlock Text="Ilość znaków: " Width="220" />
+                                <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Center">
+                        <Button Content="Szyfruj" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Deszyfruj" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Generuj Klucz" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Autorzy" HorizontalContentAlignment="Center" Width="150" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                        <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
+                            <TextBlock Text="Szyfrogram" Classes="Header" HorizontalAlignment="Center" />
+                            <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
+                            <StackPanel Spacing="10" Orientation="Horizontal">
+                                <TextBox Text="Ścieżka do pliku" Width="120" />
+                                <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                            </StackPanel>
+                            <TextBox Text="Tutaj możesz wpisać szyfrogram w formie UTF-8"
+                                     Width="220"
+                                     Height="360"
+                                     TextWrapping="Wrap" />
+                            <Button Content="Zapisz do pliku" Width="220"
+                                    HorizontalAlignment="Center"
+                                    HorizontalContentAlignment="Center" />
+
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </StackPanel>
+        </Border>
+    </Panel>
+
+
+</Window>
