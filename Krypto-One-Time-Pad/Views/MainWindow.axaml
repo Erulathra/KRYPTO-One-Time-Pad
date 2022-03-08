@@ -43,12 +43,12 @@
                             <TextBox Text="Ścieżka do pliku" Width="120" />
                             <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
                         </StackPanel>
-                        <TextBox Text="Tutaj możesz wpisać tekst jawny w formie UTF-8"
+                        <TextBox Text="{Binding PlainText, Mode=TwoWay}"
                                  Width="220"
                                  Height="360"
                                  TextWrapping="Wrap" />
                         <StackPanel Orientation="Vertical" Spacing="5">
-                            <TextBlock Text="Ilość znaków: " Width="220" />
+                            <TextBlock Text="{Binding PlainTextLenght}" Width="220" />
                             <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
                         </StackPanel>
 
@@ -64,12 +64,12 @@
                                 <TextBox Text="Ścieżka do pliku" Width="120" />
                                 <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
-                            <TextBox Text="Tutaj możesz wpisać klucz w formie UTF-8"
+                            <TextBox Text="{Binding Key, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
                                      TextWrapping="Wrap" />
                             <StackPanel Orientation="Vertical" Spacing="5">
-                                <TextBlock Text="Ilość znaków: " Width="220" />
+                                <TextBlock Text="{Binding KeyLenght}" Width="220" />
                                 <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
                             </StackPanel>
                         </StackPanel>
@@ -93,10 +93,11 @@
                                 <TextBox Text="Ścieżka do pliku" Width="120" />
                                 <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
-                            <TextBox Text="Tutaj możesz wpisać szyfrogram w formie UTF-8"
+                            <TextBox Text="{Binding CipherText, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
                                      TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding CipherTextLenght}" Width="220" />
                             <Button Content="Zapisz do pliku" Width="220"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center" />

@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Krypto_One_Time_Pad.ViewModels;
 
 namespace Krypto_One_Time_Pad.Views
 {
@@ -7,6 +8,7 @@ namespace Krypto_One_Time_Pad.Views
 		public MainWindow()
 		{
 			InitializeComponent();
+			this.DataContext = new MainWindowViewModel();
 		}
 	}
 }
