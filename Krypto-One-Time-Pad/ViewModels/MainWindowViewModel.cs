@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Subjects;
-using System.Text;
-using Avalonia.Logging;
-using JetBrains.Annotations;
+﻿using MessageBox.Avalonia.DTO;
+using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 
 namespace Krypto_One_Time_Pad.ViewModels
 {
 	public class MainWindowViewModel : ReactiveObject
 	{
+		
 		private string plainText = "Tutaj możesz wpisać tekst jawny w formie UTF-8";
 		private int plainTextLenght = 0;
 		private string cipherText = "Tutaj możesz wpisać szyfrogram w formie UTF-8";
@@ -17,7 +14,25 @@ namespace Krypto_One_Time_Pad.ViewModels
 		private string key  = "Tutaj możesz wpisać klucz w formie UTF-8";
 		private int keyLenght = 0;
 
-		
+		private async void OnAuthorsClick()
+		{
+			var msBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+				.GetMessageBoxStandardWindow(new MessageBoxStandardParams{
+					ButtonDefinitions = ButtonEnum.Ok,
+					ContentTitle = "Autorzy",
+					ContentMessage = "Szymon Świędrych \nMichalina Śledzikowska",
+					Style=Style.DarkMode
+				});
+			await msBoxStandardWindow.Show();
+		}
+
+		public MainWindowViewModel()
+		{
+			PlainTextLenght = plainText.Length;
+			CipherTextLenght = plainText.Length;
+			KeyLenght = key.Length;
+		}
+
 
 		public string PlainText
 		{

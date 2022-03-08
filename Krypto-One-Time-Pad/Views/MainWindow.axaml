@@ -41,15 +41,21 @@
                         <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
                         <StackPanel Spacing="10" Orientation="Horizontal">
                             <TextBox Text="Ścieżka do pliku" Width="120" />
-                            <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                            <Button Content="Otwórz" Command="{Binding OnPlainTextOpenClick}" HorizontalContentAlignment="Center" Width="90" />
                         </StackPanel>
                         <TextBox Text="{Binding PlainText, Mode=TwoWay}"
                                  Width="220"
                                  Height="360"
                                  TextWrapping="Wrap" />
                         <StackPanel Orientation="Vertical" Spacing="5">
-                            <TextBlock Text="{Binding PlainTextLenght}" Width="220" />
-                            <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ilość znaków: " />
+                                <TextBlock Text="{Binding PlainTextLenght}" />
+                            </StackPanel>
+                            <Button Content="Zapisz do pliku" Width="220"
+                                    Command="{Binding OnPlainTextSaveClick}"
+                                    HorizontalAlignment="Center"
+                                    HorizontalContentAlignment="Center" />
                         </StackPanel>
 
                     </StackPanel>
@@ -62,25 +68,31 @@
                             <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
                             <StackPanel Spacing="10" Orientation="Horizontal">
                                 <TextBox Text="Ścieżka do pliku" Width="120" />
-                                <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                                <Button Content="Otwórz" Command="{Binding OnKeyOpenClick}" HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
                             <TextBox Text="{Binding Key, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
                                      TextWrapping="Wrap" />
                             <StackPanel Orientation="Vertical" Spacing="5">
-                                <TextBlock Text="{Binding KeyLenght}" Width="220" />
-                                <Button Content="Zapisz do pliku" HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Ilość znaków: " />
+                                    <TextBlock Text="{Binding KeyLenght}" />
+                                </StackPanel>
+                                <Button Content="Zapisz do pliku" Width="220"
+                                        Command="{Binding OnKeySaveClick}"
+                                        HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Center" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Center">
-                        <Button Content="Szyfruj" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Deszyfruj" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Generuj Klucz" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Autorzy" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Szyfruj" Command="{Binding OnCipherClick}" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Deszyfruj" Command="{Binding OnDecipherClick}" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Generuj Klucz" Command="{Binding OnGenerateKeyClick}" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Autorzy" Command="{Binding OnAuthorsClick}" HorizontalContentAlignment="Center" Width="150" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -88,20 +100,23 @@
 
                         <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
                             <TextBlock Text="Szyfrogram" Classes="Header" HorizontalAlignment="Center" />
-                            <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
+                            <TextBlock Text="Wczytaj Plik"  HorizontalAlignment="Left" />
                             <StackPanel Spacing="10" Orientation="Horizontal">
                                 <TextBox Text="Ścieżka do pliku" Width="120" />
-                                <Button Content="Otwórz" HorizontalContentAlignment="Center" Width="90" />
+                                <Button Content="Otwórz" Command="{Binding OnCipherOpenClick}" HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
                             <TextBox Text="{Binding CipherText, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
                                      TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding CipherTextLenght}" Width="220" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ilość znaków: " />
+                                <TextBlock Text="{Binding CipherTextLenght}" />
+                            </StackPanel>
                             <Button Content="Zapisz do pliku" Width="220"
+                                    Command="{Binding OnCipherSaveClick}"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center" />
-
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

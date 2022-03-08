@@ -10,5 +10,6 @@ namespace Krypto_One_Time_Pad.Views
 			InitializeComponent();
 			this.DataContext = new MainWindowViewModel();
 		}
+		
 	}
 }
