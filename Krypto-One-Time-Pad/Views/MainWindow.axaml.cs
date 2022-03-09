@@ -1,5 +1,8 @@
+using System;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Krypto_One_Time_Pad.ViewModels;
+using ReactiveUI;
 
 namespace Krypto_One_Time_Pad.Views
 {
@@ -9,7 +12,10 @@ namespace Krypto_One_Time_Pad.Views
 		{
 			InitializeComponent();
 			this.DataContext = new MainWindowViewModel();
+			var context = this.DataContext as MainWindowViewModel;
+			context.PlainText = "Ziemniak";
 		}
+
 		
 	}
 }

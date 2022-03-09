@@ -1,4 +1,7 @@
-﻿using MessageBox.Avalonia.DTO;
+﻿using System;
+using Avalonia.Controls;
+using JetBrains.Annotations;
+using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 
@@ -13,6 +16,11 @@ namespace Krypto_One_Time_Pad.ViewModels
 		private int cipherTextLenght = 0;
 		private string key  = "Tutaj możesz wpisać klucz w formie UTF-8";
 		private int keyLenght = 0;
+
+		private string plainTextPath = "ścieżka";
+		public string CipherPath { get; set; } = "ścieżka";
+		public string KeyPath { get; set; } = "ścieżka";
+
 
 		private async void OnAuthorsClick()
 		{
@@ -33,6 +41,17 @@ namespace Krypto_One_Time_Pad.ViewModels
 			KeyLenght = key.Length;
 		}
 
+		public async void OnTest(Window window)
+		{
+			var dialog = new OpenFileDialog()
+			{
+				Title = "Wybierz plik",
+				AllowMultiple = false
+			};
+
+			var result = await dialog.ShowAsync(window);
+			PlainTextPath = result[0];
+		}
 
 		public string PlainText
 		{
@@ -79,6 +98,12 @@ namespace Krypto_One_Time_Pad.ViewModels
 		{
 			get => keyLenght;
 			set => this.RaiseAndSetIfChanged(ref keyLenght, value);
+		}
+
+		public string PlainTextPath
+		{
+			get => plainTextPath;
+			set => this.RaiseAndSetIfChanged(ref plainTextPath, value);
 		}
 	}
 }

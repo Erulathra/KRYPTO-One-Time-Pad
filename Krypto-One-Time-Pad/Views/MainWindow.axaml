@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="450"
         x:Class="Krypto_One_Time_Pad.Views.MainWindow"
+        x:Name="TestWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Krypto One Time Pad"
         TransparencyLevelHint="AcrylicBlur"
@@ -12,7 +13,6 @@
 
     <Design.DataContext>
         <vm:MainWindowViewModel />
-        
     </Design.DataContext>
     <Window.Styles>
         <Style Selector="TextBlock.Header">
@@ -38,10 +38,10 @@
 
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
                         <TextBlock Text="Text Jawny" Classes="Header" HorizontalAlignment="Center" />
-                        <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
+                        <TextBlock Text="Wczytaj Plik"  HorizontalAlignment="Left" />
                         <StackPanel Spacing="10" Orientation="Horizontal">
-                            <TextBox Text="Ścieżka do pliku" Width="120" />
-                            <Button Content="Otwórz" Command="{Binding OnPlainTextOpenClick}" HorizontalContentAlignment="Center" Width="90" />
+                            <TextBlock Text="{Binding PlainTextPath, Mode=OneWay}" VerticalAlignment="Center" Width="120" />
+                            <Button Content="Otwórz" Command="{Binding OnTest}" CommandParameter="{Binding ElementName=TestWindow}" Name="PlainTextOpenButton"  HorizontalContentAlignment="Center" Width="90" />
                         </StackPanel>
                         <TextBox Text="{Binding PlainText, Mode=TwoWay}"
                                  Width="220"
@@ -67,8 +67,8 @@
                             <TextBlock Text="Klucz" Classes="Header" HorizontalAlignment="Center" />
                             <TextBlock Text="Wczytaj Plik" HorizontalAlignment="Left" />
                             <StackPanel Spacing="10" Orientation="Horizontal">
-                                <TextBox Text="Ścieżka do pliku" Width="120" />
-                                <Button Content="Otwórz" Command="{Binding OnKeyOpenClick}" HorizontalContentAlignment="Center" Width="90" />
+                                <TextBlock Text="{Binding KeyPath}" VerticalAlignment="Center" Width="120" />
+                                <Button Content="Otwórz" Name="KeyOpenButton"  HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
                             <TextBox Text="{Binding Key, Mode=TwoWay}"
                                      Width="220"
@@ -102,8 +102,8 @@
                             <TextBlock Text="Szyfrogram" Classes="Header" HorizontalAlignment="Center" />
                             <TextBlock Text="Wczytaj Plik"  HorizontalAlignment="Left" />
                             <StackPanel Spacing="10" Orientation="Horizontal">
-                                <TextBox Text="Ścieżka do pliku" Width="120" />
-                                <Button Content="Otwórz" Command="{Binding OnCipherOpenClick}" HorizontalContentAlignment="Center" Width="90" />
+                                <TextBlock Text="{Binding CipherPath}" VerticalAlignment="Center" Width="120" />
+                                <Button Content="Otwórz" Name="CipherOpenButton"  HorizontalContentAlignment="Center" Width="90" />
                             </StackPanel>
                             <TextBox Text="{Binding CipherText, Mode=TwoWay}"
                                      Width="220"
