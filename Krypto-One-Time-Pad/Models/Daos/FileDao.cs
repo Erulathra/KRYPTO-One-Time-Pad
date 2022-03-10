@@ -24,12 +24,10 @@ public class FileDao : IDao
 		}
 	}
 
-	public void Save(byte[] bytes)
+	public void Write(byte[] bytes)
 	{
 		try
 		{
-			if (!File.Exists(path))
-				File.Create(path);
 			
 			File.WriteAllBytes(path, bytes);
 		}

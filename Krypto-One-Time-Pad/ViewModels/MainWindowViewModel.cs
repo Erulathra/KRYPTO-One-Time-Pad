@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Krypto_One_Time_Pad.Models.Daos;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
@@ -89,45 +91,62 @@ public class MainWindowViewModel : ReactiveObject
 	public async void OnPlainTextOpenButton(Window window)
 	{
 		var path = await GetFilePathOpen(window);
-
-		if (path != null) Console.WriteLine("PlainText: " + path);
+		if (path == null) return;
+		PlainText = ReadFile(path);
 	}
+
+	
 
 	public async void OnKeyOpenButton(Window window)
 	{
 		var path = await GetFilePathOpen(window);
-
-		if (path != null) Console.WriteLine("Key: " + path);
+		if (path == null) return;
+		Key = ReadFile(path);
 	}
 
 	public async void OnCipherOpenButton(Window window)
 	{
 		var path = await GetFilePathOpen(window);
-
-		if (path != null) Console.WriteLine("Cipher: " + path);
+		if (path == null) return;
+		Key = ReadFile(path);
 	}
-
+	
 	public async void OnPlainTextSaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
-
-		if (path != null) Console.WriteLine("PlainText: " + path);
+		if (path == null) return;
+		WriteFile(path, PlainText);
 	}
 
 	public async void OnKeySaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
-
-		if (path != null) Console.WriteLine("Key: " + path);
+		if (path == null) return;
+		WriteFile(path, Key);
 	}
 
 	public async void OnCipherSaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
-
-		if (path != null) Console.WriteLine("Cipher: " + path);
+		if (path == null) return;
+		WriteFile(path, CipherText);
 	}
 
+	private string ReadFile(string path)
+	{
+		IDao dao = new FileDao(path);
+		var bytes = dao.Read();
+		return Convert.ToBase64String(bytes);
+	}
+	
+	private void WriteFile(string path, string content)
+	{
+		IDao dao = new FileDao(path);
+		//var bytes = Encoding.UTF8.GetBytes(content);
+		var bytes = Convert.FromBase64String(content);
+		dao.Write(bytes);
+	}
+	
 	private async Task<string?> GetFilePathOpen(Window window)
 	{
 		var dialog = new OpenFileDialog

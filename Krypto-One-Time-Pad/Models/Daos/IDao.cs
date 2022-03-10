@@ -5,7 +5,7 @@ namespace Krypto_One_Time_Pad.Models.Daos;
 public interface IDao
 {
 	byte[] Read();
-	void Save(byte[] bytes);
+	void Write(byte[] bytes);
 }
 
 public class DaoException : Exception
