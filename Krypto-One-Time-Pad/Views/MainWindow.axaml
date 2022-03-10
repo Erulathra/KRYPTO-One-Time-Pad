@@ -16,7 +16,7 @@
     </Design.DataContext>
     <Window.Styles>
         <Style Selector="TextBlock.Header">
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
     </Window.Styles>
 
@@ -33,7 +33,7 @@
 
         <Border Padding="15">
             <StackPanel Spacing="15" Classes="Background" Orientation="Horizontal" HorizontalAlignment="Center"
-                        VerticalAlignment="Top">
+                        VerticalAlignment="Center">
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
 
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Top">
@@ -48,13 +48,13 @@
                                 <TextBlock Text="{Binding PlainTextLenght}" />
                             </StackPanel>
                             <Button Content="Otwórz Plik" Width="220"
-                                    Command="{Binding OnPlainTextOpenButton}" 
-                                    CommandParameter="{Binding ElementName=TestWindow}" 
+                                    Command="{Binding OnPlainTextOpenButton}"
+                                    CommandParameter="{Binding ElementName=TestWindow}"
                                     HorizontalAlignment="Center"
-                                    HorizontalContentAlignment="Center"  />
+                                    HorizontalContentAlignment="Center" />
                             <Button Content="Zapisz do pliku" Width="220"
                                     Command="{Binding OnPlainTextSaveButton}"
-                                    CommandParameter="{Binding ElementName=TestWindow}" 
+                                    CommandParameter="{Binding ElementName=TestWindow}"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center" />
                         </StackPanel>
@@ -76,14 +76,14 @@
                                     <TextBlock Text="{Binding KeyLenght}" />
                                 </StackPanel>
                                 <Button Content="Otwórz Plik" Width="220"
-                                        Command="{Binding OnKeyOpenButton}" 
-                                        CommandParameter="{Binding ElementName=TestWindow}" 
+                                        Command="{Binding OnKeyOpenButton}"
+                                        CommandParameter="{Binding ElementName=TestWindow}"
                                         HorizontalAlignment="Center"
-                                        HorizontalContentAlignment="Center"  />
+                                        HorizontalContentAlignment="Center" />
 
                                 <Button Content="Zapisz do pliku" Width="220"
                                         Command="{Binding OnKeySaveButton}"
-                                        CommandParameter="{Binding ElementName=TestWindow}" 
+                                        CommandParameter="{Binding ElementName=TestWindow}"
                                         HorizontalAlignment="Center"
                                         HorizontalContentAlignment="Center" />
                             </StackPanel>
@@ -92,10 +92,14 @@
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Center">
-                        <Button Content="Szyfruj" Command="{Binding OnCipherClick}" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Deszyfruj" Command="{Binding OnDecipherClick}" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Generuj Klucz" Command="{Binding OnGenerateKeyClick}" HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Autorzy" Command="{Binding OnAuthorsClick}" HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Szyfruj" Command="{Binding OnCipherClick}" HorizontalContentAlignment="Center"
+                                Width="150" />
+                        <Button Content="Deszyfruj" Command="{Binding OnDecipherClick}"
+                                HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Generuj Klucz" Command="{Binding OnGenerateKeyClick}"
+                                HorizontalContentAlignment="Center" Width="150" />
+                        <Button Content="Autorzy" Command="{Binding OnAuthorsClick}"
+                                HorizontalContentAlignment="Center" Width="150" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -112,13 +116,13 @@
                                 <TextBlock Text="{Binding CipherTextLenght}" />
                             </StackPanel>
                             <Button Content="Otwórz Plik" Width="220"
-                                    Command="{Binding OnCipherOpenButton}" 
-                                    CommandParameter="{Binding ElementName=TestWindow}" 
+                                    Command="{Binding OnCipherOpenButton}"
+                                    CommandParameter="{Binding ElementName=TestWindow}"
                                     HorizontalAlignment="Center"
-                                    HorizontalContentAlignment="Center"  />
+                                    HorizontalContentAlignment="Center" />
                             <Button Content="Zapisz do pliku" Width="220"
                                     Command="{Binding OnCipherSaveButton}"
-                                    CommandParameter="{Binding ElementName=TestWindow}" 
+                                    CommandParameter="{Binding ElementName=TestWindow}"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center" />
                         </StackPanel>

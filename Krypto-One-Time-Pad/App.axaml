@@ -3,10 +3,10 @@
              xmlns:local="using:Krypto_One_Time_Pad"
              x:Class="Krypto_One_Time_Pad.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+        <FluentTheme Mode="Dark" />
     </Application.Styles>
 </Application>
