@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using JetBrains.Annotations;
 using MessageBox.Avalonia.DTO;
@@ -16,12 +18,7 @@ namespace Krypto_One_Time_Pad.ViewModels
 		private int cipherTextLenght = 0;
 		private string key  = "Tutaj możesz wpisać klucz w formie UTF-8";
 		private int keyLenght = 0;
-
-		private string plainTextPath = "ścieżka";
-		public string CipherPath { get; set; } = "ścieżka";
-		public string KeyPath { get; set; } = "ścieżka";
-
-
+		
 		private async void OnAuthorsClick()
 		{
 			var msBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
@@ -41,16 +38,69 @@ namespace Krypto_One_Time_Pad.ViewModels
 			KeyLenght = key.Length;
 		}
 
-		public async void OnTest(Window window)
+		public async void OnPlainTextOpenButton(Window window)
+		{
+			var path = await GetFilePathOpen(window);
+
+			if (path != null) Console.WriteLine("PlainText: " + path);
+		}
+		
+		public async void OnKeyOpenButton(Window window)
+		{
+			var path = await GetFilePathOpen(window);
+
+			if (path != null) Console.WriteLine("Key: " + path);
+		}
+		
+		public async void OnCipherOpenButton(Window window)
+		{
+			var path = await GetFilePathOpen(window);
+
+			if (path != null) Console.WriteLine("Cipher: " + path);
+		}
+		
+		public async void OnPlainTextSaveButton(Window window)
+		{
+			var path = await GetFilePathSave(window);
+
+			if (path != null) Console.WriteLine("PlainText: " + path);
+		}
+		
+		public async void OnKeySaveButton(Window window)
+		{
+			var path = await GetFilePathSave(window);
+
+			if (path != null) Console.WriteLine("Key: " + path);
+		}
+		
+		public async void OnCipherSaveButton(Window window)
+		{
+			var path = await GetFilePathSave(window);
+
+			if (path != null) Console.WriteLine("Cipher: " + path);
+		}
+
+		private async Task<string?> GetFilePathOpen(Window window)
 		{
 			var dialog = new OpenFileDialog()
 			{
-				Title = "Wybierz plik",
+				Title = "Otwórz plik",
 				AllowMultiple = false
 			};
 
 			var result = await dialog.ShowAsync(window);
-			PlainTextPath = result[0];
+			return result?[0];
+		}
+		
+		private async Task<string?> GetFilePathSave(Window window)
+		{
+			var dialog = new SaveFileDialog()
+			{
+				Title = "Zapisz plik",
+			};
+
+			var result = await dialog.ShowAsync(window);
+			return result;
 		}
 
 		public string PlainText
@@ -99,11 +149,6 @@ namespace Krypto_One_Time_Pad.ViewModels
 			get => keyLenght;
 			set => this.RaiseAndSetIfChanged(ref keyLenght, value);
 		}
-
-		public string PlainTextPath
-		{
-			get => plainTextPath;
-			set => this.RaiseAndSetIfChanged(ref plainTextPath, value);
-		}
+		
 	}
 }
