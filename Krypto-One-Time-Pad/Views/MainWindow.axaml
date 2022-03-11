@@ -92,13 +92,13 @@
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Center">
-                        <Button Content="Szyfruj" Command="{Binding OnCipherClick}" HorizontalContentAlignment="Center"
+                        <Button Content="Szyfruj" Command="{Binding OnEncryptButton}" HorizontalContentAlignment="Center"
                                 Width="150" />
-                        <Button Content="Deszyfruj" Command="{Binding OnDecipherClick}"
+                        <Button Content="Deszyfruj" Command="{Binding OnDecryptButton}"
                                 HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Generuj Klucz" Command="{Binding OnGenerateKeyClick}"
+                        <Button Content="Generuj Klucz" Command="{Binding OnGenerateKeyButton}"
                                 HorizontalContentAlignment="Center" Width="150" />
-                        <Button Content="Autorzy" Command="{Binding OnAuthorsClick}"
+                        <Button Content="Autorzy" Command="{Binding OnAuthorsButton}"
                                 HorizontalContentAlignment="Center" Width="150" />
                     </StackPanel>
                 </StackPanel>
