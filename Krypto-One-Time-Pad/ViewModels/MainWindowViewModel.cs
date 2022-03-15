@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -36,9 +37,9 @@ public class MainWindowViewModel : ReactiveObject
 
 	public MainWindowViewModel()
 	{
-		PlainTextLenght = plainText.Length;
-		CipherTextLenght = plainText.Length;
-		KeyLenght = key.Length;
+		CipherText = "Tutaj możesz wpisać szyfrogram w formie UTF-8";
+		Key = "Tutaj możesz wpisać klucz w formie UTF-8";
+		PlainText = "Tutaj możesz wpisać tekst jawny w formie UTF-8";
 	}
 
 	public string PlainText
@@ -47,7 +48,8 @@ public class MainWindowViewModel : ReactiveObject
 		set
 		{
 			this.RaiseAndSetIfChanged(ref plainText, value);
-			PlainTextLenght = plainText.Length;
+			var tempBytes = Encoding.UTF8.GetBytes(plainText);
+			PlainTextLenght = tempBytes.Length;
 		}
 	}
 
@@ -63,7 +65,8 @@ public class MainWindowViewModel : ReactiveObject
 		set
 		{
 			this.RaiseAndSetIfChanged(ref cipherText, value);
-			CipherTextLenght = CipherText.Length;
+			var tempBytes = ConvertStringToByte(cipherText);
+			CipherTextLenght = tempBytes.Length;
 		}
 	}
 
@@ -79,7 +82,8 @@ public class MainWindowViewModel : ReactiveObject
 		set
 		{
 			this.RaiseAndSetIfChanged(ref key, value);
-			KeyLenght = key.Length;
+			var tempBytes = Encoding.UTF8.GetBytes(key);
+			KeyLenght = tempBytes.Length;
 		}
 	}
 
@@ -140,10 +144,21 @@ public class MainWindowViewModel : ReactiveObject
 		if (buttonResult != ButtonResult.Ok)
 			return;
 
-		var tempPlainText = Convert.FromBase64String(PlainText);
+		var plainTextLocalBytes = plainTextBytes;
 		
-		keyBytes = oneTimePad.GenerateKey(tempPlainText.Length);
-		Key = Convert.ToBase64String(keyBytes);
+		if (isEncryptText)
+		{
+			plainTextLocalBytes = Encoding.UTF8.GetBytes(key);
+		}
+
+		keyBytes = oneTimePad.GenerateKey(plainTextLocalBytes.Length);
+		KeyLenght = keyBytes.Length;
+		KeyFilePath = "Wygenerowany Klucz";
+		
+		if (isEncryptText)
+		{
+			Key = Encoding.UTF8.GetString(keyBytes);
+		}
 	}
 
 	private static async Task<ButtonResult> ShowGenerateKeyMessageBox()
@@ -185,6 +200,7 @@ public class MainWindowViewModel : ReactiveObject
 		var bytes= ReadFile(path);
 		PlainFilePath = Path.GetFileName(path);
 		plainTextBytes = bytes;
+		PlainTextLenght = plainTextBytes.Length;
 	}
 
 	public async void OnKeyOpenButton(Window window)
@@ -194,6 +210,7 @@ public class MainWindowViewModel : ReactiveObject
 		var bytes= ReadFile(path);
 		KeyFilePath = Path.GetFileName(path);
 		keyBytes = bytes;
+		KeyLenght = keyBytes.Length;
 	}
 
 	public async void OnCipherOpenButton(Window window)
@@ -203,6 +220,7 @@ public class MainWindowViewModel : ReactiveObject
 		var bytes= ReadFile(path);
 		CipherFilePath = Path.GetFileName(path);
 		cipherBytes = bytes;
+		CipherTextLenght = cipherBytes.Length;
 	}
 
 	public async void OnPlainTextSaveButton(Window window)
@@ -278,10 +296,16 @@ public class MainWindowViewModel : ReactiveObject
 			var tempCipher = oneTimePad.Encrypt(plainTextLocalBytes, keyLocalBytes);
 			if (isEncryptText)
 			{
-				CipherText = Convert.ToBase64String(tempCipher);
+				CipherText = ConvertByteToString(tempCipher);
 			}
-
+			else
+			{
+				CipherFilePath = "Wygenerowany Szyfrogram";
+			}
+			
 			cipherBytes = tempCipher;
+			CipherTextLenght = tempCipher.Length;
+
 		}
 		catch (OneTimePadException e)
 		{
@@ -296,26 +320,41 @@ public class MainWindowViewModel : ReactiveObject
 		
 		if (isEncryptText)
 		{
-			cipherLocalBytes = Encoding.UTF8.GetBytes(plainText);
+			cipherLocalBytes = ConvertStringToByte(cipherText);
 			keyLocalBytes = Encoding.UTF8.GetBytes(key);
 		}
 		
 		try
 		{
 			var tempPlainText = oneTimePad.Decrypt(cipherLocalBytes, keyLocalBytes);
-			plainText = Convert.ToBase64String(tempPlainText);
-			
+
 			if (isEncryptText)
 			{
-				PlainText = Convert.ToBase64String(tempPlainText);
+				PlainText = Encoding.UTF8.GetString(tempPlainText);
+			}
+			else
+			{
+				PlainFilePath = "Wygenerowany Tekst Jawny";
 			}
 
-			cipherBytes = tempPlainText;
+			plainTextBytes = tempPlainText;
 		}
 		catch (OneTimePadException e)
 		{
 			ShowExceptionMessageBox(e);
 		}
+	}
+
+	private string ConvertByteToString(Byte[] bytes)
+	{
+		var characters = bytes.Select(b => (char)b).ToArray();
+		return new string(characters);
+	}
+	
+	private Byte[] ConvertStringToByte(string str)
+	{
+		var characters = str.ToCharArray();
+		return characters.Select(c => (byte)c).ToArray();
 	}
 #pragma warning restore CS4014
 }

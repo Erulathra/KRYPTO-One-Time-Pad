@@ -6,11 +6,17 @@ class OneTimePad : IOneTimePad
 {
 	public byte[] Encrypt(byte[] plainText, byte[] key)
 	{
+		if(plainText == null || key == null)
+			throw new OneTimePadKeyException("Klucz lub text jawny jest pusty");
+		
 		return PerformXOR(plainText, key);
 	}
 
 	public byte[] Decrypt(byte[] cipher, byte[] key)
 	{
+		if(cipher == null || key == null)
+			throw new OneTimePadKeyException("Klucz lub szyfrogram jest pusty");
+		
 		return PerformXOR(cipher, key);
 	}
 
@@ -27,7 +33,7 @@ class OneTimePad : IOneTimePad
 	private byte[] PerformXOR(byte[] text, byte[] key)
     {
 		if (text.Length != key.Length)
-			throw new OneTimePadKeyException("Tekst i klucz róŸni¹ siê d³ugoœci¹");
+			throw new OneTimePadKeyException("Tekst i klucz rÃ³niÄ… sie dÅ‚ugoÅ›ciÄ…");
 
 		byte[] finalText = new byte[text.Length];
 

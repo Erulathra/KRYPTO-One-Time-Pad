@@ -45,7 +45,7 @@
                                  />
                         <StackPanel Orientation="Vertical" Spacing="5">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Ilość znaków: " />
+                                <TextBlock Text="Ilość bytów: " />
                                 <TextBlock Text="{Binding PlainTextLenght}" />
                             </StackPanel>
                             <TextBlock Text="{Binding PlainFilePath}" />
@@ -75,7 +75,7 @@
                                      AcceptsReturn="True"/>
                             <StackPanel Orientation="Vertical" Spacing="5">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Ilość znaków: " />
+                                    <TextBlock Text="Ilość bytów: " />
                                     <TextBlock Text="{Binding KeyLenght}" />
                                 </StackPanel>
                                 <TextBlock Text="{Binding KeyFilePath}" />
@@ -120,7 +120,7 @@
                                      TextWrapping="Wrap"
                                      AcceptsReturn="True"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Ilość znaków: " />
+                                <TextBlock Text="Ilość bytów: " />
                                 <TextBlock Text="{Binding CipherTextLenght}" />
                             </StackPanel>
                             <TextBlock Text="{Binding CipherFilePath}" />
