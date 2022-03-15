@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using JetBrains.Annotations;
 using Krypto_One_Time_Pad.Models.Daos;
 using Krypto_One_Time_Pad.Models.OneTimePad;
 using MessageBox.Avalonia;
@@ -12,15 +15,24 @@ namespace Krypto_One_Time_Pad.ViewModels;
 
 public class MainWindowViewModel : ReactiveObject
 {
+	private byte[] cipherBytes;
 	private string cipherText = "Tutaj możesz wpisać szyfrogram w formie UTF-8";
+	private string cipherFilePath = "";
 	private int cipherTextLenght;
+
 	private string key = "Tutaj możesz wpisać klucz w formie UTF-8";
+	private string keyFilePath = "";
+	private byte[] keyBytes;
 	private int keyLenght;
 
+	private readonly IOneTimePad oneTimePad = new OneTimePad();
+
 	private string plainText = "Tutaj możesz wpisać tekst jawny w formie UTF-8";
+	private byte[] plainTextBytes;
+	private string plainFilePath = "";
 	private int plainTextLenght;
 
-	private IOneTimePad oneTimePad = new OneTimePad();
+	private bool isEncryptText = false;
 
 	public MainWindowViewModel()
 	{
@@ -77,6 +89,37 @@ public class MainWindowViewModel : ReactiveObject
 		set => this.RaiseAndSetIfChanged(ref keyLenght, value);
 	}
 
+	public bool IsEncryptText
+	{
+		get => isEncryptText;
+		set => this.RaiseAndSetIfChanged(ref isEncryptText, value);
+	}
+
+	public string CipherFilePath
+	{
+		get => cipherFilePath;
+		set => this.RaiseAndSetIfChanged(ref cipherFilePath, value);
+	}
+
+	public string KeyFilePath
+	{
+		get => keyFilePath;
+		set => this.RaiseAndSetIfChanged(ref keyFilePath, value);
+	}
+
+	public string PlainFilePath
+	{
+		get => plainFilePath;
+		set => this.RaiseAndSetIfChanged(ref plainFilePath, value);
+	}
+
+	public void OnEncryptTextChange(CheckBox checkBox)
+	{
+		bool? isChecked = checkBox.IsChecked;
+		if(isChecked != null)
+			IsEncryptText = (bool)isChecked;
+	}
+
 	private async void OnAuthorsButton()
 	{
 		var msBoxStandardWindow = MessageBoxManager
@@ -94,13 +137,13 @@ public class MainWindowViewModel : ReactiveObject
 	private async void OnGenerateKeyButton()
 	{
 		var buttonResult = await ShowGenerateKeyMessageBox();
-		if (buttonResult != ButtonResult.Ok) 
+		if (buttonResult != ButtonResult.Ok)
 			return;
 
 		var tempPlainText = Convert.FromBase64String(PlainText);
 		
-		var byteKey = oneTimePad.GenerateKey(tempPlainText.Length);
-		Key = Convert.ToBase64String(byteKey);
+		keyBytes = oneTimePad.GenerateKey(tempPlainText.Length);
+		Key = Convert.ToBase64String(keyBytes);
 	}
 
 	private static async Task<ButtonResult> ShowGenerateKeyMessageBox()
@@ -119,40 +162,6 @@ public class MainWindowViewModel : ReactiveObject
 		var result = await msBoxStandardWindow.Show();
 		return result;
 	}
-#pragma warning disable CS4014
-
-	public void OnEncryptButton()
-	{
-		var plainTextBytes = Convert.FromBase64String(PlainText);
-		var keyBytes = Convert.FromBase64String(Key);
-		try
-		{
-			var tempCipher = oneTimePad.Encrypt(plainTextBytes, keyBytes);
-			CipherText = Convert.ToBase64String(tempCipher);
-
-		}
-		catch (OneTimePadException e)
-		{
-			ShowExceptionMessageBox(e);
-		}
-		
-	}
-	
-	public void OnDecryptButton()
-	{
-		var cipherBytes = Convert.FromBase64String(CipherText);
-		var keyBytes = Convert.FromBase64String(Key);
-		try
-		{
-			var tempPlainText = oneTimePad.Decrypt(cipherBytes, keyBytes);
-			plainText = Convert.ToBase64String(tempPlainText);
-		}
-		catch (OneTimePadException e)
-		{
-			ShowExceptionMessageBox(e);
-		}
-	}
-#pragma warning restore CS4014
 
 	private static async Task<ButtonResult> ShowExceptionMessageBox(OneTimePadException e)
 	{
@@ -173,57 +182,60 @@ public class MainWindowViewModel : ReactiveObject
 	{
 		var path = await GetFilePathOpen(window);
 		if (path == null) return;
-		PlainText = ReadFile(path);
+		var bytes= ReadFile(path);
+		PlainFilePath = Path.GetFileName(path);
+		plainTextBytes = bytes;
 	}
 
 	public async void OnKeyOpenButton(Window window)
 	{
 		var path = await GetFilePathOpen(window);
 		if (path == null) return;
-		Key = ReadFile(path);
+		var bytes= ReadFile(path);
+		KeyFilePath = Path.GetFileName(path);
+		keyBytes = bytes;
 	}
 
 	public async void OnCipherOpenButton(Window window)
 	{
 		var path = await GetFilePathOpen(window);
 		if (path == null) return;
-		Key = ReadFile(path);
+		var bytes= ReadFile(path);
+		CipherFilePath = Path.GetFileName(path);
+		cipherBytes = bytes;
 	}
 
 	public async void OnPlainTextSaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
 		if (path == null) return;
-		WriteFile(path, PlainText);
+		WriteFile(path, plainTextBytes);
 	}
 
 	public async void OnKeySaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
 		if (path == null) return;
-		WriteFile(path, Key);
+		WriteFile(path, keyBytes);
 	}
 
 	public async void OnCipherSaveButton(Window window)
 	{
 		var path = await GetFilePathSave(window);
 		if (path == null) return;
-		WriteFile(path, CipherText);
+		WriteFile(path, cipherBytes);
 	}
 
-	private string ReadFile(string path)
+	private Byte[] ReadFile(string path)
 	{
 		IDao dao = new FileDao(path);
-		var bytes = dao.Read();
-		return Convert.ToBase64String(bytes);
+		return dao.Read();
 	}
 
-	private void WriteFile(string path, string content)
+	private void WriteFile(string path, Byte[] content)
 	{
 		IDao dao = new FileDao(path);
-		//var bytes = Encoding.UTF8.GetBytes(content);
-		var bytes = Convert.FromBase64String(content);
-		dao.Write(bytes);
+		dao.Write(content);
 	}
 
 	private async Task<string?> GetFilePathOpen(Window window)
@@ -248,4 +260,62 @@ public class MainWindowViewModel : ReactiveObject
 		var result = await dialog.ShowAsync(window);
 		return result;
 	}
+#pragma warning disable CS4014
+
+	public void OnEncryptButton()
+	{
+		var plainTextLocalBytes = plainTextBytes;
+		var keyLocalBytes = keyBytes;
+		
+		if (isEncryptText)
+		{
+			plainTextLocalBytes = Encoding.UTF8.GetBytes(plainText);
+			keyLocalBytes = Encoding.UTF8.GetBytes(key);
+		}
+		
+		try
+		{
+			var tempCipher = oneTimePad.Encrypt(plainTextLocalBytes, keyLocalBytes);
+			if (isEncryptText)
+			{
+				CipherText = Convert.ToBase64String(tempCipher);
+			}
+
+			cipherBytes = tempCipher;
+		}
+		catch (OneTimePadException e)
+		{
+			ShowExceptionMessageBox(e);
+		}
+	}
+
+	public void OnDecryptButton()
+	{
+		var cipherLocalBytes = cipherBytes;
+		var keyLocalBytes = keyBytes;
+		
+		if (isEncryptText)
+		{
+			cipherLocalBytes = Encoding.UTF8.GetBytes(plainText);
+			keyLocalBytes = Encoding.UTF8.GetBytes(key);
+		}
+		
+		try
+		{
+			var tempPlainText = oneTimePad.Decrypt(cipherLocalBytes, keyLocalBytes);
+			plainText = Convert.ToBase64String(tempPlainText);
+			
+			if (isEncryptText)
+			{
+				PlainText = Convert.ToBase64String(tempPlainText);
+			}
+
+			cipherBytes = tempPlainText;
+		}
+		catch (OneTimePadException e)
+		{
+			ShowExceptionMessageBox(e);
+		}
+	}
+#pragma warning restore CS4014
 }

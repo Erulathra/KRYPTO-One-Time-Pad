@@ -41,12 +41,14 @@
                         <TextBox Text="{Binding PlainText, Mode=TwoWay}"
                                  Width="220"
                                  Height="360"
-                                 TextWrapping="Wrap" />
+                                 TextWrapping="Wrap"
+                                 />
                         <StackPanel Orientation="Vertical" Spacing="5">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Ilość znaków: " />
                                 <TextBlock Text="{Binding PlainTextLenght}" />
                             </StackPanel>
+                            <TextBlock Text="{Binding PlainFilePath}" />
                             <Button Content="Otwórz Plik" Width="220"
                                     Command="{Binding OnPlainTextOpenButton}"
                                     CommandParameter="{Binding ElementName=TestWindow}"
@@ -69,12 +71,14 @@
                             <TextBox Text="{Binding Key, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
-                                     TextWrapping="Wrap" />
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"/>
                             <StackPanel Orientation="Vertical" Spacing="5">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Ilość znaków: " />
                                     <TextBlock Text="{Binding KeyLenght}" />
                                 </StackPanel>
+                                <TextBlock Text="{Binding KeyFilePath}" />
                                 <Button Content="Otwórz Plik" Width="220"
                                         Command="{Binding OnKeyOpenButton}"
                                         CommandParameter="{Binding ElementName=TestWindow}"
@@ -92,6 +96,9 @@
                 </StackPanel>
                 <StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel Spacing="5" Orientation="Vertical" VerticalAlignment="Center">
+                        <CheckBox Name="IsTextCheckBox" 
+                                  Command="{Binding OnEncryptTextChange}"
+                                  CommandParameter="{Binding ElementName=IsTextCheckBox}">Szyfruj text</CheckBox>
                         <Button Content="Szyfruj" Command="{Binding OnEncryptButton}" HorizontalContentAlignment="Center"
                                 Width="150" />
                         <Button Content="Deszyfruj" Command="{Binding OnDecryptButton}"
@@ -110,11 +117,13 @@
                             <TextBox Text="{Binding CipherText, Mode=TwoWay}"
                                      Width="220"
                                      Height="360"
-                                     TextWrapping="Wrap" />
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Ilość znaków: " />
                                 <TextBlock Text="{Binding CipherTextLenght}" />
                             </StackPanel>
+                            <TextBlock Text="{Binding CipherFilePath}" />
                             <Button Content="Otwórz Plik" Width="220"
                                     Command="{Binding OnCipherOpenButton}"
                                     CommandParameter="{Binding ElementName=TestWindow}"
