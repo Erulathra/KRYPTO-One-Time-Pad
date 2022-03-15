@@ -37,6 +37,8 @@ public class MainWindowViewModel : ReactiveObject
 
 	public MainWindowViewModel()
 	{
+		plainTextBytes = Array.Empty<byte>();
+		
 		CipherText = "Tutaj możesz wpisać szyfrogram w formie UTF-8";
 		Key = "Tutaj możesz wpisać klucz w formie UTF-8";
 		PlainText = "Tutaj możesz wpisać tekst jawny w formie UTF-8";
