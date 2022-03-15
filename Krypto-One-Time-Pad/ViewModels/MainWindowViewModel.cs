@@ -111,7 +111,7 @@ public class MainWindowViewModel : ReactiveObject
 				ButtonDefinitions = ButtonEnum.OkCancel,
 				ContentTitle = "Generowanie Klucza",
 				ContentMessage =
-					"Uwaga!, metoda generowania klucza jest psełdolosowa i nie powinno się" +
+					"Uwaga!, metoda generowania klucza jest pseudolosowa i nie powinno się" +
 					"\nz niej korzystać do generowania klucza. Czy mimo to chcesz kontynuować?",
 				Icon = Icon.Warning,
 				Style = Style.DarkMode

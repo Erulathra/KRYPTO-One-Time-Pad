@@ -6,7 +6,7 @@ class OneTimePad : IOneTimePad
 {
 	public byte[] Encrypt(byte[] plainText, byte[] key)
 	{
-		throw new NotImplementedException();
+		return plainText;
 	}
 
 	public byte[] Decrypt(byte[] cipher, byte[] key)
